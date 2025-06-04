@@ -44,7 +44,7 @@ export const Navigation = () => {
           />
         </nav>
       </div>
-      <Button type="primary" style={{ fontSize: 'inherit' }}>
+      <Button type="primary" size="large">
         Создать задачу
       </Button>
     </header>

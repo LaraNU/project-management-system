@@ -6,7 +6,7 @@ export function Layout() {
   return (
     <AntLayout style={{ minHeight: '100vh' }}>
       <Navigation />
-      <AntLayout.Content style={{ padding: '24px' }}>
+      <AntLayout.Content style={{ padding: '24px 0' }}>
         <Outlet />
       </AntLayout.Content>
     </AntLayout>
