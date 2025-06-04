@@ -23,7 +23,7 @@ export const Navigation = () => {
             <Menu.Item key="issues">
               <Link to="/issues">Все задачи</Link>
             </Menu.Item>
-            <Menu.Item key="boards" extra>
+            <Menu.Item key="boards">
               <Link to="/boards">Проекты</Link>
             </Menu.Item>
           </Menu>
