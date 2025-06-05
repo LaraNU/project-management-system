@@ -84,6 +84,7 @@ export const TaskModal = observer(({ open, onClose }: TaskModalProps) => {
   return (
     <Modal
       title={selectedTask ? 'Редактирование задачи' : 'Создание задачи'}
+      centered
       open={open}
       onOk={() => form.submit()}
       onCancel={handleCancel}
