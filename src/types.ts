@@ -1,17 +1,28 @@
+type Assignee = {
+  id: number;
+  fullName: string;
+  email: string;
+  avatarUrl: string;
+};
+
 export type Task = {
   id: number;
   title: string;
   description?: string;
   priority: 'Low' | 'Medium' | 'High';
   status: 'Backlog' | 'InProgress' | 'Done';
-  assignee: {
-    id: number;
-    fullName: string;
-    email: string;
-    avatarUrl: string;
-  };
+  assignee: Assignee;
   boardId: number;
   boardName: string;
+};
+
+export type TaskBoard = {
+  id: number;
+  title: string;
+  description: string;
+  priority: 'Low' | 'Medium' | 'High';
+  status: 'Backlog' | 'InProgress' | 'Done';
+  assignee: Assignee;
 };
 
 export type Board = {
