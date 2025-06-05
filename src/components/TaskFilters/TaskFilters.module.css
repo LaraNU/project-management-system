@@ -1,0 +1,25 @@
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.search {
+  flex: 1;
+  min-width: 250px;
+}
+
+.selectFilters {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.selectFilters > div {
+  flex: 1;
+}
