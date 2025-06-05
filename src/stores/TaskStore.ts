@@ -19,7 +19,7 @@ class TaskStore {
 
     try {
       const response = await getTasks();
-      const data: Task[] = response.data.data || response.data;
+      const data: Task[] = response.data.data;
       runInAction(() => {
         this.tasks = data;
         this.loading = false;

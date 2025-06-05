@@ -17,7 +17,7 @@ class BoardStore {
 
     try {
       const response = await getBoards();
-      const data: Board[] = response.data.data || response.data;
+      const data: Board[] = response.data.data;
       runInAction(() => {
         this.boards = data;
         this.loading = false;
