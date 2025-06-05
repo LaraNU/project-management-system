@@ -12,3 +12,10 @@ export type Task = {
   status: string;
   title: string;
 };
+
+export type Board = {
+  description: string;
+  id: number;
+  name: string;
+  taskCount: number;
+};
