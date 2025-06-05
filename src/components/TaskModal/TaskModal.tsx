@@ -112,17 +112,18 @@ export const TaskModal = observer(({ open, onClose }: TaskModalProps) => {
             <TextArea rows={4} placeholder="Описание" />
           </Form.Item>
 
-          {!selectedTask && (
-            <Form.Item name="boardId" rules={[{ required: true, message: 'Выберите проект' }]}>
-              <Select placeholder="Выберите проект" loading={boardStore.loading}>
-                {boardStore.boards.map((board) => (
-                  <Select.Option key={board.id} value={board.id}>
-                    {board.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          )}
+          <Form.Item
+            name={selectedTask ? 'boardName' : 'boardId'}
+            rules={[{ required: true, message: 'Выберите проект' }]}
+          >
+            <Select placeholder="Выберите проект" loading={boardStore.loading}>
+              {boardStore.boards.map((board) => (
+                <Select.Option key={board.id} value={board.id}>
+                  {board.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
 
           <Form.Item name={'priority'} rules={[{ required: true, message: 'Выберите приоритет' }]}>
             <Select placeholder="Приоритет">
