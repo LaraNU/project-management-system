@@ -1,16 +1,17 @@
 export type Task = {
-  assignee: {
-    avatarUrl: string;
-    email: string;
-    fullName: string;
-    id: number;
-  };
-  boardName: string;
-  description: string;
   id: number;
+  title: string;
+  description?: string;
   priority: 'Low' | 'Medium' | 'High';
   status: 'Backlog' | 'InProgress' | 'Done';
-  title: string;
+  assignee: {
+    id: number;
+    fullName: string;
+    email: string;
+    avatarUrl: string;
+  };
+  boardId: number;
+  boardName: string;
 };
 
 export type Board = {
