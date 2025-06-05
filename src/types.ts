@@ -8,8 +8,8 @@ export type Task = {
   boardName: string;
   description: string;
   id: number;
-  priority: string;
-  status: string;
+  priority: 'Low' | 'Medium' | 'High';
+  status: 'Backlog' | 'InProgress' | 'Done';
   title: string;
 };
 
