@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Modal, Button, Spin, Form, Input, Select, message } from 'antd';
 import { taskStore } from '../../stores/TaskStore';
@@ -19,11 +20,13 @@ type TaskFormValues = {
 type TaskModalProps = {
   open: boolean;
   onClose: () => void;
+  boardId?: number;
 };
 
-export const TaskModal = observer(({ open, onClose }: TaskModalProps) => {
+export const TaskModal = observer(({ open, onClose, boardId }: TaskModalProps) => {
   const [form] = Form.useForm();
   const { selectedTask, loadingSelected } = taskStore;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!open) return;
@@ -56,6 +59,8 @@ export const TaskModal = observer(({ open, onClose }: TaskModalProps) => {
           assigneeId: values.assigneeId,
         });
 
+        await boardStore.fetchBoardById(selectedTask.boardId);
+
         message.success('Задача успешно обновлена');
       } else {
         await taskStore.createTask({
@@ -81,6 +86,11 @@ export const TaskModal = observer(({ open, onClose }: TaskModalProps) => {
     onClose();
   };
 
+  const handleBoards = (id: number) => {
+    navigate(`/boards/${id}`);
+    onClose();
+  };
+
   return (
     <Modal
       title={selectedTask ? 'Редактирование задачи' : 'Создание задачи'}
@@ -90,9 +100,11 @@ export const TaskModal = observer(({ open, onClose }: TaskModalProps) => {
       onCancel={handleCancel}
       confirmLoading={taskStore.loadingSelected}
       footer={[
-        <Button key="back" onClick={handleCancel}>
-          Перейти на доску
-        </Button>,
+        boardId && selectedTask === null ? null : (
+          <Button key="back" onClick={() => handleBoards(selectedTask?.boardId || 0)}>
+            Перейти на доску
+          </Button>
+        ),
         <Button key="submit" type="primary" onClick={() => form.submit()}>
           {selectedTask ? 'Обновить' : 'Создать'}
         </Button>,
@@ -113,18 +125,28 @@ export const TaskModal = observer(({ open, onClose }: TaskModalProps) => {
             <TextArea rows={4} placeholder="Описание" />
           </Form.Item>
 
-          <Form.Item
-            name={selectedTask ? 'boardName' : 'boardId'}
-            rules={[{ required: true, message: 'Выберите проект' }]}
-          >
-            <Select placeholder="Выберите проект" loading={boardStore.loading}>
-              {boardStore.boards.map((board) => (
-                <Select.Option key={board.id} value={board.id}>
-                  {board.name}
+          {boardId ? (
+            <Form.Item>
+              <Select placeholder="Выберите проект" disabled defaultValue={boardId}>
+                <Select.Option value={boardId}>
+                  {boardStore.boards.find((b) => b.id === boardId)?.name || 'Проект не найден'}
                 </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
+              </Select>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              name={selectedTask ? 'boardName' : 'boardId'}
+              rules={[{ required: true, message: 'Выберите проект' }]}
+            >
+              <Select placeholder="Выберите проект" loading={boardStore.loading}>
+                {boardStore.boards.map((board) => (
+                  <Select.Option key={board.id} value={board.id}>
+                    {board.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          )}
 
           <Form.Item name={'priority'} rules={[{ required: true, message: 'Выберите приоритет' }]}>
             <Select placeholder="Приоритет">

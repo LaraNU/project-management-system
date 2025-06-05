@@ -1,0 +1,30 @@
+.container {
+  padding: 24px;
+}
+
+.boardsContainer {
+  background: #ffffff;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.card {
+  cursor: pointer;
+  border: 1px solid #7e7e7e;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin: 0 auto;
+}

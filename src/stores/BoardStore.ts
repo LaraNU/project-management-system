@@ -1,10 +1,12 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { type Board } from '../types';
-import { getBoards } from '../api/tasks';
+import { type Board, type TaskBoard } from '../types';
+import { getBoards, getBoardById } from '../api/tasks';
 
 class BoardStore {
   boards: Board[] = [];
+  selectedBoard: TaskBoard[] = [];
   loading = false;
+  loadingSelected = false;
   error: string | null = null;
 
   constructor() {
@@ -26,6 +28,24 @@ class BoardStore {
       runInAction(() => {
         if (err instanceof Error) this.error = err.message || 'Unknown error';
         this.loading = false;
+      });
+    }
+  }
+
+  async fetchBoardById(id: number) {
+    this.loadingSelected = true;
+    this.error = null;
+    try {
+      const response = await getBoardById(id);
+      const data: TaskBoard[] = response.data.data;
+      runInAction(() => {
+        this.selectedBoard = data;
+        this.loadingSelected = false;
+      });
+    } catch (err) {
+      runInAction(() => {
+        if (err instanceof Error) this.error = err.message || 'Unknown error';
+        this.loadingSelected = false;
       });
     }
   }
