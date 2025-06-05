@@ -13,17 +13,17 @@ export const IssuesPage = observer(() => {
     taskStore.fetchTasks();
   }, []);
 
-  const showModal = (id: number) => {
+  const showCreateModal = () => {
+    taskStore.clearSelectedTask();
+    setModalOpen(true);
+  };
+
+  const showEditModal = (id: number) => {
     taskStore.fetchTaskById(id);
     setModalOpen(true);
   };
 
   const closeModal = () => {
-    setModalOpen(false);
-    taskStore.clearSelectedTask();
-  };
-
-  const handleOk = () => {
     setModalOpen(false);
     taskStore.clearSelectedTask();
   };
@@ -40,7 +40,7 @@ export const IssuesPage = observer(() => {
               <li
                 key={task.id}
                 className={styles.taskItem}
-                onClick={() => showModal(task.id)}
+                onClick={() => showEditModal(task.id)}
                 role="button"
               >
                 {task.id}. {task.title}
@@ -50,12 +50,12 @@ export const IssuesPage = observer(() => {
         )}
 
         <Divider />
-        <Button type="default" size="large">
+        <Button type="default" size="large" onClick={showCreateModal}>
           Создать задачу
         </Button>
       </div>
 
-      <TaskModal open={modalOpen} onOk={handleOk} onCancel={closeModal} />
+      <TaskModal open={modalOpen} onClose={closeModal} />
     </div>
   );
 });
