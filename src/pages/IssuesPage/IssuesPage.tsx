@@ -30,8 +30,9 @@ export const IssuesPage = observer(() => {
 
   return (
     <div>
-      <h2>Все задачи</h2>
       <div className={styles.container}>
+        <h2 className={styles.title}>Все задачи</h2>
+        <Divider />
         {taskStore.loading ? (
           <Spin size="large" />
         ) : (
@@ -46,10 +47,10 @@ export const IssuesPage = observer(() => {
                 {task.id}. {task.title}
               </li>
             ))}
+            <Divider />
           </ul>
         )}
 
-        <Divider />
         <Button type="default" size="large" onClick={showCreateModal}>
           Создать задачу
         </Button>
